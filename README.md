@@ -40,6 +40,13 @@ These are standard vehicle area network signals utilized directly by the machine
 - `Com_rTSC1VRVCURtdrTq_100ms`: Desired torque or torque limit (%)
 - `Com_rTSC1VRRDTrqReq_100ms`: Torque requested by retarder (%)
 
+**Dataset Preview (df.head())**
+| Epm_nEng_100ms | VehV_v_100ms | ActMod_trqInr_100ms | RngMod_trqCrSmin_100ms | CoVeh_trqAcs_100ms | Clth_st_100ms | CoEng_st_100ms | Com_rTSC1VRVCURtdrTq_100ms | Com_rTSC1VRRDTrqReq_100ms | RoadSlope_100ms | Vehicle_Mass |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1000.5 | 45.2 | 120.4 | -15.0 | 9.999747 | 0 | 3 | 0 | 0 | 0.5 | 49 |
+| 850.5 | 24.5 | 50.1 | -15.0 | 9.999747 | 0 | 3 | 0 | 0 | 1.2 | 38 |
+| 1200.0 | 60.0 | 450.2 | -15.0 | 9.999747 | 0 | 3 | 0 | 0 | -0.2 | 49 |
+
 ### 3. Problem Output
 - **Vehicle Mass (Classification)**: Constrained and discretized into two exact variants: `38 t` or `49 t`.
 - **Road Slope (Regression)**: Represented as actual slope percentage from the ADASIS horizon calculated natively using the function `tan(slope) = RoadSlope_100ms / 100`.
