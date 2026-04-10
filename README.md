@@ -75,45 +75,40 @@ Conducting EDA is paramount when working with mechanical telemetry due to the va
 missing_stats = df.isnull().sum()
 print(f"Total missing values detected: {missing_stats.sum()}")
 ```
+```text
+Total missing values detected: 0
+```
 
 ## 🔹 Feature Correlation
 - **Dimensionality Reduction**: Safely dropped 5 signal columns that contained only a single unique value constraint, as they possess zero statistical variance and provide no analytical leverage.
-- **Feature Correlation Engine**: Identified a strongly significant negative correlation **(-0.62)** between `VehV` and `RngMod`. Concluded grouping these two streams into a `Combined_VehV_RngMod` composite asset.
 
 ```python
-import seaborn as sns
-import matplotlib.pyplot as plt
+# Identify and drop columns with zero variance (single unique value)
+useless_cols = [col for col in df.columns if df[col].nunique() == 1]
+print(f"Features with single unique value:\\n{useless_cols}")
 
-# Generate a correlation diagnostic heatmap
-plt.figure(figsize=(10, 8))
-sns.heatmap(df.corr(), annot=True, cmap='RdBu', fmt=".2f")
-plt.title("Telemetry Signal Correlation Matrix")
-plt.show()
+df.drop(columns=useless_cols, inplace=True)
+print(f"Shape after dropping zero-variance features: {df.shape}")
 ```
-![Correlation Heatmap](images/plot_1.png)
+```text
+Features with single unique value:
+['CoVeh_trqAcs_100ms', 'Clth_st_100ms', 'CoEng_st_100ms', 'Com_rTSC1VRVCURtdrTq_100ms', 'Com_rTSC1VRRDTrqReq_100ms']
+Shape after dropping zero-variance features: (8496, 6)
+```
+- **Feature Correlation Engine**: Identified a strongly significant negative correlation **(-0.62)** between `VehV` and `RngMod`. Concluded grouping these two streams into a `Combined_VehV_RngMod` composite asset.
+
+![Correlation Heatmap](images/plot_5.png)
 
 ## 🔹 Outlier Detection & Behavior
 - Noticed heavy data skewing on telemetry features (e.g., `RngMod_trqCrSmin_100ms` where median overlaps directly with the first quartile `Q1`).
 - Resolved to apply a **RobustScaler** to dampen sensitivities towards extreme values, heavily improving resistance against mechanical error ranges and sensor anomalies.
 
-```python
-# Visualize signal distribution to diagnose mechanical anomalies
-sns.boxplot(x=df['RngMod_trqCrSmin_100ms'])
-plt.title("Distribution indicating heavy skewness & Q1/Median overlap")
-plt.show()
-```
-![Outlier Detection](images/plot_5.png)
+![Outlier Detection](images/plot_2.png)
 
 ## 🔹 Class Label Distribution
 - To accurately represent testing groups, the final pipeline forcefully requires **stratification (`stratify=y`)** when splitting the data batches, preserving original vehicle mass class proportions.
 
-```python
-# Evaluate categorical mass balances
-sns.countplot(x=df['Vehicle_Mass'])
-plt.title("Class Balance: 38 t vs 49 t")
-plt.show()
-```
-![Class Label Distribution](images/plot_6.png)
+![Class Label Distribution](images/plot_4.png)
 
 ---
 
