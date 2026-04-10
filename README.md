@@ -1,5 +1,5 @@
 # 🚀 Virtual Vehicle Sensor
-*Read this in [Vietnamese 🇻🇳](virtual_vehicle_sensor_vi.md)*
+*Read this in [Vietnamese 🇻🇳](README_vi.md)*
 
 ### Machine Learning System for Road Slope Regression & Vehicle Mass Classification  
 
