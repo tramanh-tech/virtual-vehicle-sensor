@@ -1,4 +1,6 @@
 # 🚀 Virtual Vehicle Sensor
+*Read this in [Vietnamese 🇻🇳](README_vi.md)*
+
 ### Machine Learning System for Road Slope Regression & Vehicle Mass Classification  
 
 **Author:** Phạm Trâm Anh
