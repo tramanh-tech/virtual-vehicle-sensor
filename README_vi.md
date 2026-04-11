@@ -1,6 +1,5 @@
-
 # 🚀 Cảm biến ảo cho phương tiện (Virtual Vehicle Sensor)
-*Đọc bản tiếng Anh tại [English 🇬🇧](README.md)*
+*Đọc bản tiếng Anh tại [English EN](README.md)*
 
 ### Hệ thống Machine Learning cho bài toán hồi quy độ dốc đường & phân loại khối lượng xe
 
