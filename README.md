@@ -21,28 +21,44 @@ Unfortunately, installing additional sensors to measure weight and slope directl
 
 ---
 
-## 📊 Dataset Description & System Structure
-
-To address this challenge, the dataset acts as the foundational building block for the software sensor system. It consists of 11 distinct vehicular signals with **no temporal sequence** (order has been scrambled), meaning the predictive system must operate reliably on **individual frames**.
+## 📊 System Structure & Dataset Description
 
 ### 1. System Structure
-Our architecture acts as a dual-engine **Virtual Sensor**, taking standard internal telemetry as inputs and feeding them simultaneously into:
-- A **Regression Engine** (for forecasting continuous road gradients).
-- A **Classification Engine** (for deciding discrete mass boundaries).
+```mermaid
+flowchart LR
+    A[Vehicle Telemetry Inputs<br/>Speed, RPM, Torque, etc.]
+    --> B[Preprocessing & Feature Engineering]
 
-### 2. Input Metrics (9 Predictors)
-These are standard vehicle area network signals utilized directly by the machine learning models:
-- `Epm_nEng_100ms`: Average engine speed of one cylinder segment (rpm)
-- `VehV_v_100ms`: Vehicle speed (km/h)
-- `ActMod_trqInr_100ms`: Current, back-calculated inner engine torque (Nm)
-- `RngMod_trqCrSmin_100ms`: Minimum engine torque at the crankshaft level (Nm)
-- `CoVeh_trqAcs_100ms`: Torque demand of accessories (Nm)
-- `Clth_st_100ms`: Debounced status of clutch (-)
-- `CoEng_st_100ms`: Engine operation status (enum: 0 to 5)
-- `Com_rTSC1VRVCURtdrTq_100ms`: Desired torque or torque limit (%)
-- `Com_rTSC1VRRDTrqReq_100ms`: Torque requested by retarder (%)
+    B --> C[Virtual Vehicle Sensor Models]
 
-**Dataset Preview (df.head())**
+    C --> D[Vehicle Mass Prediction<br/>38t / 49t]
+    C --> E[Road Slope Prediction<br/>Continuous %]
+
+    D --> F[ADAS / Fleet Applications]
+    E --> F
+
+    F --> G[Intelligent Power Management]
+    F --> H[Dynamic Route Planning]
+    F --> I[Hardware Cost Reduction]
+```
+
+### 2. Dataset Description
+To address this challenge, the dataset acts as the foundational building block for the software sensor system. 
+The data contains 11 signals with **no temporal sequence** (order has been scrambled), meaning the predictive system must operate reliably on **individual frames**. The first 9 signals can be used as input for the prediction, the last 2 are the desired output:
+
+    Epm_nEng_100ms : average engine speed of one cylinder segment (rpm)
+    VehV_v_100ms : vehicle speed (km/h)
+    ActMod_trqInr_100ms : current, back-calculated inner engine torque (Nm)
+    RngMod_trqCrSmin_100ms : minimum engine torque at the crankshaft level (Nm)
+    CoVeh_trqAcs_100ms : torque demand of accessories (Nm)
+    Clth_st_100ms : debounced status of clutch (-)
+    CoEng_st_100ms : engine operation status (enum, 0 COENG_STANDBY, 1 COENG_READY, 2 COENG_CRANKING, 3 COENG_RUNNING, 4 COENG_STOPPING, 5 COENG_FINISH)
+    Com_rTSC1VRVCURtdrTq_100ms : desired torque or torque limit (%)
+    Com_rTSC1VRRDTrqReq_100ms : torque requested by retarder (%)
+    RoadSlope_100ms : actual slope from the ADASIS horizon (%, tan(slope) = (RoadSlope_100ms / 100))
+    Vehicle_Mass: the weight of the vehicle, either 38 t or 49 t
+
+**Dataset Preview**
 | Epm_nEng_100ms | VehV_v_100ms | ActMod_trqInr_100ms | RngMod_trqCrSmin_100ms | CoVeh_trqAcs_100ms | Clth_st_100ms | CoEng_st_100ms | Com_rTSC1VRVCURtdrTq_100ms | Com_rTSC1VRRDTrqReq_100ms | RoadSlope_100ms | Vehicle_Mass |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1000.5 | 45.2 | 120.4 | -15.0 | 9.999747 | 0 | 3 | 0 | 0 | 0.5 | 49 |
