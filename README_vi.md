@@ -50,9 +50,10 @@ Hệ thống cảm biến ảo gồm 2 nhánh:
 ---
 
 ### 4. Ứng dụng thực tế
-- **Quản lý năng lượng & tiết kiệm nhiên liệu:** điều chỉnh mô-men, ga, hộp số theo tải trọng và độ dốc  
-- **Lập kế hoạch lộ trình động:** tránh đường dốc lớn hoặc giới hạn tải trọng  
-- **Giảm chi phí phần cứng:** thay thế cảm biến đo tải và đo độ nghiêng truyền thống  
+Khi cảm biến ảo dự đoán chính xác Độ dốc mặt đường và Khối lượng xe, các thông tin này có thể được tích hợp để nâng cao hiệu quả của hệ thống hỗ trợ lái xe tiên tiến (ADAS) và vận hành đội xe hạng nặng như sau:
+- **Quản lý công suất thông minh & Tối ưu nhiên liệu**: Điều chỉnh mô-men xoắn động cơ theo thời gian thực, tính toán hành vi ga tối ưu, và tối ưu chiến lược sang số dựa trên tải trọng dự đoán và độ dốc phía trước.
+- **Lập kế hoạch tuyến đường động**: Hỗ trợ hệ thống định vị tự động tính toán lại lộ trình nhằm tránh các đoạn dốc lớn hoặc cầu/đường có giới hạn tải trọng thấp (ví dụ: tránh tuyến giới hạn dưới 49 tấn).
+- **Thay thế phần cứng tiết kiệm chi phí**: Loại bỏ nhu cầu lắp đặt, hiệu chuẩn và bảo trì các cảm biến đo độ nghiêng hoặc cân tải trọng vật lý vốn đắt đỏ và dễ hư hỏng điện tử.
 
 ---
 
